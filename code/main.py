@@ -19,7 +19,7 @@ def word_game():
         temp_session[alice_request.user_id] = dict()
 
     game = WordGame(temp_session[alice_request.user_id])
-    game.act()
+    game.act(alice_request.command)
 
     alice_response = AliceResponse(alice_request)
     alice_response.set_answer(game.answer)
