@@ -10,7 +10,7 @@ app = Flask(__name__)
 session = Session()
 
 
-@app.route('/word-game/', methods=["POST"])
+@app.route('/word-game/', methods=['POST'])
 def word_game():
     alice_request = AliceRequest(request.json)
 

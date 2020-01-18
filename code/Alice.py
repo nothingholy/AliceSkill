@@ -23,7 +23,7 @@ class AliceResponse:
         self.response_dict['response']['text'] = text
 
     def set_end(self, state: bool):
-        self.response_dict["response"]["end_session"] = state
+        self.response_dict['response']['end_session'] = state
 
     def __str__(self):
         return json.dumps(
