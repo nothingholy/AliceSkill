@@ -1,10 +1,9 @@
 from flask import Flask, request
 
+import config.local as config
 from Alice import AliceRequest, AliceResponse
 from Session import Session
 from WordGame import WordGame
-
-import config.local as config
 
 app = Flask(__name__)
 session = Session()
@@ -17,9 +16,6 @@ def word_game():
     temp_session = session.load_session()
     if alice_request.user_id not in temp_session:
         temp_session[alice_request.user_id] = dict()
-
-    if temp_session[alice_request.user_id].get('end'):
-        return str(AliceResponse(alice_request))
 
     game = WordGame(temp_session[alice_request.user_id])
     game.act(alice_request.command)
