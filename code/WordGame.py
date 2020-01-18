@@ -112,7 +112,7 @@ class WordGame:
 
     def check_word(self, command: str):
         if command.lower() == 'пропустить ход':
-            self.prepared_answer += 'Вы пропустили ход\n'
+            self.prepared_answer += f'Вы пропустили ход. Было загадано слово {self.player_data["word"]}\n'
 
             self.player_data['points'] -= 1
             self.result_message()
