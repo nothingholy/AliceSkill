@@ -16,7 +16,8 @@ jobs:
     - stage: test
     - name: test
     - script:
-      - pytest tests/
+      - cd tests
+      - PYTHONPATH=../code pytest .
     - stage: deploy
     - name: deploy
     - script:
