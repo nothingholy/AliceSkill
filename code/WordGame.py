@@ -44,6 +44,20 @@ class WordCollection:
             add_letter_amount = random.randint(1, 4)  # Количество добавленных букв
             letters_dict[letter] += add_letter_amount
 
+    @staticmethod
+    def check_word_with_letters_dict(word: str, letters_dict_old: dict):
+        letters_dict = letters_dict_old.copy()
+
+        for letter in word:  # Подсчет букв
+            if letter not in letters_dict:
+                return False  # Буквы нет в словаре - выход
+
+            letters_dict[letter] -= 1
+            if letters_dict[letter] < 0:
+                return False
+
+        return True
+
 
 collection = WordCollection()
 
@@ -60,9 +74,7 @@ class WordGame:
 
     def act(self, command: str):
         if command == '':
-            self.greetings()
-            self.generate_word()
-            self.letters_message()
+            self.check_word('начать игру')
         else:
             self.check_word(command)
 
@@ -79,7 +91,10 @@ class WordGame:
         letters = self.player_data['letters']
 
         # Собирает строку БУКВА: КОЛИЧЕСТВО и соединяет в сообщение
-        self.prepared_answer += '\n'.join([f'{letter}: {letters[letter]}' for letter in letters]) + '\n'
+        format_strs = [f'{letter}: {letters[letter]}' for letter in letters]
+        random.shuffle(format_strs)
+
+        self.prepared_answer += '\n '.join(format_strs) + '\n'
 
     def generate_word(self):
         self.player_data['word'] = WordCollection.get_random_word()  # Сохраняем слово
@@ -102,21 +117,36 @@ class WordGame:
 
             self.generate_word()
             self.letters_message()
+
+        elif command.lower() == 'начать игру':
+            self.greetings()
+            self.generate_word()
+            self.letters_message()
+
+            self.player_data['points'] = 0
+            self.player_data['end'] = False
+
         elif command.lower() == 'закончить игру':
             self.goodbye()
 
             self.player_data['end'] = True
+
         else:
-            if command in WordCollection.word_tree:
-                self.prepared_answer += 'Отличная работа\n'
-
-                self.player_data['points'] += 1
-                self.result_message()
-
-                self.generate_word()
-                self.letters_message()
-            else:
+            if command not in WordCollection.word_tree:
                 self.prepared_answer += 'Такого слова, увы, нет\n'
+                return
+
+            if not WordCollection.check_word_with_letters_dict(command, self.player_data['letters']):
+                self.prepared_answer += 'У меня нет столько букв\n'
+                return
+
+            self.prepared_answer += 'Отличная работа\n'
+
+            self.player_data['points'] += 1
+            self.result_message()
+
+            self.generate_word()
+            self.letters_message()
 
     @property
     def answer(self):
