@@ -18,7 +18,7 @@ class WordCollection:
     @staticmethod
     def get_random_word():
         index = random.randint(0, len(WordCollection.word_list) - 1)
-        return WordCollection.word_list[index]
+        return WordCollection.word_list[index].rstrip()
 
     @staticmethod
     def word_to_letters_dict(word):
