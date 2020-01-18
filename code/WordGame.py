@@ -61,11 +61,12 @@ class WordCollection:
     ## Находится ли слово в заданном словаре
     ## @param word Слово
     ## @param letters_dict_old Заданный словарь (не изменяется)
+    ## @return True, если слово из заданного словаря
     @staticmethod
     def check_word_with_letters_dict(word: str, letters_dict_old: dict):
         letters_dict = letters_dict_old.copy()
 
-        for letter in word:  # Подсчет букв
+        for letter in word.lower():  # Подсчет букв
             if letter not in letters_dict:
                 return False  # Буквы нет в словаре - выход
 
