@@ -2,19 +2,22 @@ import json
 
 
 class AliceRequest:
-    def __init__(self, request_json):
-        request_dict = json.loads(request_json)
-
+    def __init__(self, request_dict: dict):
         self.version = request_dict['version']
+
         self.session = request_dict['session']
-        self.user_id = request_dict['user_id']
-        self.is_new_session = request_dict['is_new_session']
+        self.user_id = self.session['user_id']
+        self.is_new_session = self.session['new']
+
         self.command = request_dict['request']['command']
 
 
 class AliceResponse:
     def __init__(self, alice_request: AliceRequest):
         self.response_dict = alice_request.__dict__.copy()
+
+        if not 'response' in self.response_dict:
+            self.response_dict['response'] = dict()
 
     def set_answer(self, text: str):
         self.response_dict['response']['text'] = text
