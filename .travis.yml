@@ -6,8 +6,8 @@ include:
     sudo: true
 
 script:
-  - apt-get update -y
-  - apt-get install -y sshpass
+  - sudo apt-get update -y
+  - sudo apt-get install -y sshpass
   - mkdir -p ~/.ssh
   - chmod 700 ~/.ssh
   - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
