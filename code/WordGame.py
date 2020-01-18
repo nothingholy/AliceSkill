@@ -103,6 +103,10 @@ class WordGame:
     ## Функция взаимодействия
     ## @param command Команда
     def act(self, command: str):
+        if 'end' in self.player_data and self.player_data['end']:
+            self.prepared_answer += 'Скажите "Начать игру", чтобы начать новую игру'
+            return
+
         if command == '':
             self.check_word('начать игру')
         else:
