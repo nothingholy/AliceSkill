@@ -103,10 +103,6 @@ class WordGame:
     ## Функция взаимодействия
     ## @param command Команда
     def act(self, command: str):
-        if 'end' in self.player_data and self.player_data['end']:
-            self.prepared_answer += 'Скажите "Начать игру", чтобы начать новую игру'
-            return
-
         if command == '':
             self.check_word('начать игру')
         else:
@@ -151,6 +147,19 @@ class WordGame:
     ## Проверка слова или команды
     ## @param command Команда
     def check_word(self, command: str):
+        if command.lower() == 'начать игру':
+            self.greetings()
+            self.generate_word()
+            self.letters_message()
+
+            self.player_data['points'] = 0
+            self.player_data['end'] = False
+            return
+
+        if 'end' in self.player_data and self.player_data['end']:
+            self.prepared_answer += 'Скажите "Начать игру", чтобы начать новую игру'
+            return
+
         if command.lower() == 'пропустить ход':
             self.prepared_answer += f'Вы пропустили ход. Было загадано слово {self.player_data["word"]}\n'
 
@@ -159,14 +168,6 @@ class WordGame:
 
             self.generate_word()
             self.letters_message()
-
-        elif command.lower() == 'начать игру':
-            self.greetings()
-            self.generate_word()
-            self.letters_message()
-
-            self.player_data['points'] = 0
-            self.player_data['end'] = False
 
         elif command.lower() == 'закончить игру':
             self.goodbye()
