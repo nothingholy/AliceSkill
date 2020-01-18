@@ -1,14 +1,32 @@
-language: minimal
+language: python
+python:
+  - "3.7"
 
 include:
   - os: linux
     dist: xenial
     sudo: true
 
-script:
-  - sudo apt-get update -y
-  - sudo apt-get install -y sshpass
-  - mkdir -p ~/.ssh
-  - chmod 700 ~/.ssh
-  - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
-  - sshpass -p $CI_PASSWORD ssh -tt visitor_persh@vm.toliak.ru 'ssh -o "StrictHostKeyChecking no" -tt PershVM ./update-alice.sh'
+install:
+  - pip install -r requirements.txt
+  - pip install pytest
+
+jobs:
+  include:
+    - stage: test
+    - name: test
+    - script:
+      - pytest tests/
+    - stage: deploy
+    - name: deploy
+    - script:
+      - sudo apt-get update -y
+      - sudo apt-get install -y sshpass
+      - mkdir -p ~/.ssh
+      - chmod 700 ~/.ssh
+      - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
+      - sshpass -p $CI_PASSWORD ssh -tt visitor_persh@vm.toliak.ru 'ssh -o "StrictHostKeyChecking no" -tt PershVM ./update-alice.sh'
+
+stages:
+  - test
+  - deploy
