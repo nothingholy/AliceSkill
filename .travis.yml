@@ -1,0 +1,16 @@
+language: minimal
+
+include:
+  - os: linux
+    dist: xenial
+    sudo: true
+    addons:
+      apt:
+        packages:
+          - sshpass
+
+script:
+  - mkdir -p ~/.ssh
+  - chmod 700 ~/.ssh
+  - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
+  - sshpass -p $CI_PASSWORD ssh -tt visitor_persh@toliak.ru 'ssh -o "StrictHostKeyChecking no" -tt PershVM ./update-alice.sh'
