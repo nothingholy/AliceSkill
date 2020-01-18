@@ -60,8 +60,9 @@ class WordGame:
 
     def act(self, command: str):
         if command == '':
-            self.check_word('начать игру')
-
+            self.greetings()
+            self.generate_word()
+            self.letters_message()
         else:
             self.check_word(command)
 
