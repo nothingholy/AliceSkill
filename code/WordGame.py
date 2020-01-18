@@ -74,7 +74,9 @@ class WordGame:
 
     def act(self, command: str):
         if command == '':
-            self.check_word('начать игру')
+            self.greetings()
+            self.generate_word()
+            self.letters_message()
         else:
             self.check_word(command)
 
@@ -117,14 +119,6 @@ class WordGame:
 
             self.generate_word()
             self.letters_message()
-
-        elif command.lower() == 'начать игру':
-            self.greetings()
-            self.generate_word()
-            self.letters_message()
-
-            self.player_data['points'] = 0
-            self.player_data['end'] = False
 
         elif command.lower() == 'закончить игру':
             self.goodbye()

@@ -18,6 +18,9 @@ def word_game():
     if alice_request.user_id not in temp_session:
         temp_session[alice_request.user_id] = dict()
 
+    if temp_session[alice_request.user_id]['end']:
+        return ''
+
     game = WordGame(temp_session[alice_request.user_id])
     game.act(alice_request.command)
 
