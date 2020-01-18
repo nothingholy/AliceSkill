@@ -14,19 +14,19 @@ install:
 jobs:
   include:
     - stage: test
-    - name: test
-    - script:
-      - cd tests
-      - PYTHONPATH=../code pytest .
+      name: test
+      script:
+        - cd tests
+        - PYTHONPATH=../code pytest .
     - stage: deploy
-    - name: deploy
-    - script:
-      - sudo apt-get update -y
-      - sudo apt-get install -y sshpass
-      - mkdir -p ~/.ssh
-      - chmod 700 ~/.ssh
-      - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
-      - sshpass -p $CI_PASSWORD ssh -tt visitor_persh@vm.toliak.ru 'ssh -o "StrictHostKeyChecking no" -tt PershVM ./update-alice.sh'
+      name: deploy
+      script:
+        - sudo apt-get update -y
+        - sudo apt-get install -y sshpass
+        - mkdir -p ~/.ssh
+        - chmod 700 ~/.ssh
+        - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
+        - sshpass -p $CI_PASSWORD ssh -tt visitor_persh@vm.toliak.ru 'ssh -o "StrictHostKeyChecking no" -tt PershVM ./update-alice.sh'
 
 stages:
   - test
