@@ -19,7 +19,7 @@ def word_game():
         temp_session[alice_request.user_id] = dict()
 
     if temp_session[alice_request.user_id].get('end'):
-        return ''
+        return str(AliceResponse(alice_request))
 
     game = WordGame(temp_session[alice_request.user_id])
     game.act(alice_request.command)

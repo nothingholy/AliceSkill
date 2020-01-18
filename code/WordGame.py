@@ -33,7 +33,6 @@ class WordCollection:
 
     @staticmethod
     def add_letters(letters_dict: dict):
-        # TODO: variant, add new letters
         keys = list(letters_dict.keys())  # Все ключи словаря (буквы слова, уникальные)
 
         keys_amount = random.randint(2, len(keys) - 1)  # Количество букв (уникальных), у которых увеличим количество
@@ -87,7 +86,8 @@ class WordGame:
                                 'Если не получается составить слово, можете сказать "Пропустить ход"\n' \
                                 'За каждое составленное слово Вы получите +1 балл, а за каждое пропущенное -1 балл.' \
                                 'После каждого составленного слова список букв меняется\n' \
-                                'Скажите "Закончить игру", чтобы закончить игру\n\n'
+                                'Скажите "Закончить игру", чтобы закончить игру\n' \
+                                'Примечание: слово должно состоять не менее, чем из 4-х букв\n'
 
     def letters_message(self):
         letters = self.player_data['letters']
@@ -134,7 +134,10 @@ class WordGame:
                 self.prepared_answer += 'У меня нет столько букв\n'
                 return
 
-            self.prepared_answer += 'Отличная работа\n'
+            self.prepared_answer += 'Отличная работа'
+            if command.lower() != self.player_data['word']:
+                self.prepared_answer += f', но было загадано слово "{self.player_data["word"]}"'
+            self.prepared_answer += '\n'
 
             self.player_data['points'] += 1
             self.result_message()

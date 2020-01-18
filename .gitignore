@@ -2,3 +2,4 @@
 venv
 session_database.json
 local.py
+doxygen-build
