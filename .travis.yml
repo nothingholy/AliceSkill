@@ -26,7 +26,7 @@ jobs:
         - mkdir -p ~/.ssh
         - chmod 700 ~/.ssh
         - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
-        - sshpass -p $CI_PASSWORD ssh -tt visitor_persh@vm.toliak.ru 'ssh -o "StrictHostKeyChecking no" -tt PershVM ./update-alice.sh'
+        - sshpass -p $CI_PASSWORD ssh -tt visitor_persh@skeak.site 'ssh -o "StrictHostKeyChecking no" -tt PershVM ./update-alice.sh'
 
 stages:
   - test
